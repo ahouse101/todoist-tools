@@ -56,7 +56,7 @@ export function fixTaskCasing() : void {
 	// After data has been recieved, determine which tasks have incorrect casing.
 	console.log('Performing case conversion...');
 	Promise.all([projectsRequest, tasksRequest])
-	.then((/* Array of return values */) => {
+	.then(() => {
 		for (const task of tasks) {
 			switch (projects[task.project_id].category) {
 				case ProjectCategory.Ignore:
@@ -116,13 +116,15 @@ export function fixTaskCasing() : void {
 		if (content.length > 0) {
 			// Format content.
 			content = content[0].toUpperCase() + content.substr(1);
-			if (addPeriod) {
-				// Add a period if it doesn't have one.
-				if (content.slice(-1) !== '.' && content.slice(-2) !== '."') content += '.';
-			}
-			else {
-				// Remove the period in this case.
-				if (content.slice(-1) === '.') content = content.slice(0, -1);
+			if (content.slice(-1) !== ':') { // Ending in a colon denotes a collapsible heading (can't be checked off).
+				if (addPeriod) {
+					// Add a period if it doesn't have one.
+					if (content.slice(-1) !== '.' && content.slice(-2) !== '."') content += '.';
+				}
+				else {
+					// Remove the period in this case.
+					if (content.slice(-1) === '.') content = content.slice(0, -1);
+				}
 			}
 
 			// Add to updates object if changed.

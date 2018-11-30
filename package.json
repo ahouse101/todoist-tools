@@ -1,8 +1,8 @@
 {
 	"name": "todoist-tools",
 	"version": "1.0.0",
-	"description": "",
-	"main": "fix-task-casing.ts",
+	"description": "Some node scripts that fix issues with Todoist tasks.",
+	"main": "run-fixes.ts",
 	"scripts": {
 		"start": "ts-node run-fixes.ts"
 	},
